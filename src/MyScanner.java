@@ -7,8 +7,8 @@ public class MyScanner implements AutoCloseable {
     private final char[] buffer = new char[SIZE];
     private int last = 0;
     private int current = 0;
-    private int[] types = {};
-    private char[] chars = {};
+    private int[] types = {};       //parsing types in scanner
+    private char[] chars = {};      //parsing chars in scanner
 
     public MyScanner(InputStream source) throws IOException {
         in = new InputStreamReader(source);
@@ -20,7 +20,7 @@ public class MyScanner implements AutoCloseable {
         readBuffer();
     }
 
-    public void setCharacters(int[] types, char ... chars) {
+    public void setCharacters(int[] types, char ... chars) {    //set characters, which would be parsed
         this.types = types;
         this.chars = chars;
     }
@@ -30,7 +30,7 @@ public class MyScanner implements AutoCloseable {
         current = 0;
     }
 
-    boolean isPartOfWord(char chr) {
+    boolean isPartOfWord(char chr) {        //could it be part of word
         boolean isGoodChar = false;
         for (var type: types) {
             if (Character.getType(chr) == type){
@@ -47,7 +47,7 @@ public class MyScanner implements AutoCloseable {
         return isGoodChar;
     }
 
-    public boolean isNextLine() throws IOException {
+    public boolean isNextLine() throws IOException {    //check if it's next line or not for any OS like Unix, Windows or Mac
         if (current == last) {
             readBuffer();
         }
@@ -75,7 +75,7 @@ public class MyScanner implements AutoCloseable {
         return false;
     }
 
-    public String next() throws IOException {
+    public String next() throws IOException {       //take next word
         StringBuilder sb = new StringBuilder();
         while (last != -1) {
             if (current == last) {
@@ -98,7 +98,7 @@ public class MyScanner implements AutoCloseable {
     }
 
     @Override
-    public void close() {
+    public void close() {       //close scanner
         try{
             in.close();
         } catch(IOException e) {
